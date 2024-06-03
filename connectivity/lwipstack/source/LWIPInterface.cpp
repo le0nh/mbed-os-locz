@@ -222,6 +222,9 @@ void LWIP::Interface::netif_status_irq(struct netif *netif)
     nsapi_connection_status_t connectedStatusPrev = interface->connected;
 
     if (netif_is_up(&interface->netif) && netif_is_link_up(&interface->netif)) {
+        if (interface->dhcp_started) {
+            dhcp_network_changed(&interface->netif); 
+        }
         bool dns_addr_has_to_be_added = false;
         if (!(interface->has_addr_state & HAS_ANY_ADDR) && LWIP::get_ip_addr(true, netif)) {
             if (interface->blocking) {
