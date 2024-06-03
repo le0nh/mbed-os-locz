@@ -205,6 +205,7 @@ void LWIP::Interface::netif_link_irq(struct netif *netif)
         if (netif_is_up(&interface->netif)) {
             interface->connected = NSAPI_STATUS_CONNECTING;
         }
+        dhcp_stop(&interface->netif); 
         netif_set_down(&interface->netif);
     }
 
