@@ -780,6 +780,13 @@ nsapi_error_t LWIP::Interface::bringup(bool dhcp, const char *ip, const char *ne
         }
     }
 
+    // Added block start
+    if (dhcp) {
+        if (!dhcp_supplied_address(&netif)) {
+            dhcp_renew(&netif);
+        }
+    }
+
     if (!blocking) {
         // Done enough - as addresses are acquired, there will be
         // connected callbacks.
