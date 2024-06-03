@@ -56,7 +56,7 @@
 #endif
 
 
-#define DHCP_TIMEOUT                MBED_CONF_LWIP_DHCP_TIMEOUT
+#define DHCP_TIMEOUT                10
 
 #define LINK_TIMEOUT                60
 
@@ -130,9 +130,9 @@
 // TCP sender buffer space (bytes).
 #define TCP_WND                     MBED_CONF_LWIP_TCP_WND
 
-#define TCP_MAXRTX                  MBED_CONF_LWIP_TCP_MAXRTX
+#define TCP_MAXRTX                  12
 
-#define TCP_SYNMAXRTX               MBED_CONF_LWIP_TCP_SYNMAXRTX
+#define TCP_SYNMAXRTX               6
 
 // Number of pool pbufs.
 // Each requires 684 bytes of RAM (if MSS=536 and PBUF_POOL_BUFSIZE defaulting to be based on MSS)
@@ -140,7 +140,7 @@
 
 #ifdef MBED_CONF_LWIP_PBUF_POOL_BUFSIZE
 #undef PBUF_POOL_BUFSIZE
-#define PBUF_POOL_BUFSIZE           LWIP_MEM_ALIGN_SIZE(MBED_CONF_LWIP_PBUF_POOL_BUFSIZE)
+#define PBUF_POOL_BUFSIZE               LWIP_MEM_ALIGN_SIZE(MBED_CONF_LWIP_PBUF_POOL_BUFSIZE)
 #else
 #ifndef PBUF_POOL_BUFSIZE
 #if LWIP_IPV6
@@ -219,13 +219,13 @@
 #define ICMP_DEBUG                  LWIP_DBG_OFF
 #define IGMP_DEBUG                  LWIP_DBG_OFF
 #define INET_DEBUG                  LWIP_DBG_OFF
-#define IP_DEBUG                    LWIP_DBG_OFF
+#define IP_DEBUG                    LWIP_DBG_ON
 #define IP_REASS_DEBUG              LWIP_DBG_OFF
 #define RAW_DEBUG                   LWIP_DBG_OFF
 #define MEM_DEBUG                   LWIP_DBG_OFF
 #define MEMP_DEBUG                  LWIP_DBG_OFF
-#define SYS_DEBUG                   LWIP_DBG_OFF
-#define TIMERS_DEBUG                LWIP_DBG_OFF
+#define SYS_DEBUG                   LWIP_DBG_ON
+#define TIMERS_DEBUG                LWIP_DBG_ON
 #define TCP_DEBUG                   LWIP_DBG_OFF
 #define TCP_INPUT_DEBUG             LWIP_DBG_OFF
 #define TCP_FR_DEBUG                LWIP_DBG_OFF
@@ -235,10 +235,10 @@
 #define TCP_OUTPUT_DEBUG            LWIP_DBG_OFF
 #define TCP_RST_DEBUG               LWIP_DBG_OFF
 #define TCP_QLEN_DEBUG              LWIP_DBG_OFF
-#define UDP_DEBUG                   LWIP_DBG_OFF
-#define TCPIP_DEBUG                 LWIP_DBG_OFF
+#define UDP_DEBUG                   LWIP_DBG_ON
+#define TCPIP_DEBUG                 LWIP_DBG_ON
 #define SLIP_DEBUG                  LWIP_DBG_OFF
-#define DHCP_DEBUG                  LWIP_DBG_OFF
+#define DHCP_DEBUG                  LWIP_DBG_ON
 #define AUTOIP_DEBUG                LWIP_DBG_OFF
 #define DNS_DEBUG                   LWIP_DBG_OFF
 #define IP6_DEBUG                   LWIP_DBG_OFF

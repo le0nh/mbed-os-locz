@@ -203,7 +203,7 @@ void LWIP::Interface::netif_link_irq(struct netif *netif)
 
     if (netif_is_link_up(&interface->netif) && interface->connected == NSAPI_STATUS_CONNECTING) {
         nsapi_error_t dhcp_status = interface->set_dhcp();
-
+        
         if (interface->blocking && dhcp_status == NSAPI_ERROR_OK) {
             osSemaphoreRelease(interface->linked);
         } else if (dhcp_status != NSAPI_ERROR_OK) {
