@@ -878,6 +878,7 @@ nsapi_error_t LWIP::Interface::bringdown()
     if (dhcp_started) {
         dhcp_release(&netif);
         dhcp_stop(&netif);
+        dhcp_cleanup(&netif);
         dhcp_started = false;
         dhcp_has_to_be_set = false;
     }
