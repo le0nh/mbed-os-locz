@@ -169,6 +169,8 @@ nsapi_error_t LWIP::Interface::set_dhcp()
 
 #if LWIP_DHCP
     if (dhcp_has_to_be_set) {
+        dhcp_set_link_down(&netif); 
+        dhcp_cleanup(&netif); 
         err_t err = dhcp_start(&netif);
         dhcp_has_to_be_set = false;
         if (err) {
