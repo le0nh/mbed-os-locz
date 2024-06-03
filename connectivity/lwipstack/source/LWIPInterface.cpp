@@ -169,18 +169,27 @@ nsapi_error_t LWIP::Interface::set_dhcp()
 
 #if LWIP_DHCP
     if (dhcp_has_to_be_set) {
-        dhcp_set_link_down(&netif); 
-        dhcp_cleanup(&netif); 
-        err_t err = dhcp_start(&netif);
-        dhcp_has_to_be_set = false;
-        if (err) {
-            connected = NSAPI_STATUS_DISCONNECTED;
-            if (client_callback) {
-                client_callback(NSAPI_EVENT_CONNECTION_STATUS_CHANGE, NSAPI_STATUS_DISCONNECTED);
+        dhcp_set_link_down(&netif);
+        dhcp_cleanup(&netif);
+        const int max_retries = 5;
+        int retries = 0;
+        err_t err;
+
+        while (retries < max_retries) {
+            err = dhcp_start(&netif);
+            if (err == ERR_OK) {
+                dhcp_has_to_be_set = false;
+                dhcp_started = true;
+                return NSAPI_ERROR_OK;
             }
-            return NSAPI_ERROR_DHCP_FAILURE;
+            retries++;
+            thread_sleep_for(1000 * retries); // Exponential backoff
         }
-        dhcp_started = true;
+        connected = NSAPI_STATUS_DISCONNECTED;
+        if (client_callback) {
+            client_callback(NSAPI_EVENT_CONNECTION_STATUS_CHANGE, NSAPI_STATUS_DISCONNECTED);
+        }
+        return NSAPI_ERROR_DHCP_FAILURE;
     }
 #endif
 
